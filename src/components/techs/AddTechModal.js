@@ -13,6 +13,7 @@ const AddTechModal = ({ addTech }) => {
     if (firstName === "" || lastName === "") {
       M.toast({ html: "Por favor digite o nome e o sobrenome" });
     } else {
+
       addTech({
         firstName,
         lastName,

@@ -5,24 +5,34 @@ import PropTypes from "prop-types";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { updateLog } from "../../actions/logActions";
 
-/* Responsavel por adicionar uma nova tarefa para um tecnico */
+/* Responsavel por editar um chamado já existente  */
 const EditLogModal = ({ current, updateLog }) => {
+  /*adiciona o estado aos um componentes */
+
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
-
+  /* Tem a mesma finalidade do componentDidMount, componentDidUpdate e componentWillUnmount */
+  /* Permite atualização dos estados */
   useEffect(() => {
+    //se current for diferente de vazio
     if (current) {
+      //atualiza menssagem
       setMessage(current.message);
+      //atualiza attention
       setAttention(current.attention);
+      //atualiza tech
       setTech(current.tech);
     }
   }, [current]);
 
+  /**ao precionar o botão enter chama a função onSumbmit*/
   const onSubmit = () => {
+    /* Se os campos de mensagem ou o técnico estiverem vazios apresenta a mensagem de erro*/
     if (message === "" || tech === "") {
       M.toast({ html: "Por favor digite a mensagem e o técnico" });
     } else {
+      /*Caso contrario será criado um objeto com id, mensagem, atenção, técnico e data e hora atual (objeto) */
       //console.log(message, tech, attention);
       const updLog = {
         id: current.id,
@@ -31,7 +41,7 @@ const EditLogModal = ({ current, updateLog }) => {
         tech,
         date: new Date(),
       };
-
+      //envia o objeto updLog para a função updateLog que esta em logAction.js
       updateLog(updLog);
       M.toast({ html: `Chamado atualizado por ${tech}` });
 
